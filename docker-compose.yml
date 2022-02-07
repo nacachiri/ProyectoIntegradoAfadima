@@ -1,0 +1,46 @@
+version: '3'
+services:
+   db:
+     image: mysql
+     container_name: mysql     
+     volumes:
+       - ./db_files:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: root
+     ports:
+      - 3306:3306
+     networks:
+       - redAfadima
+   web:
+      image: nginx
+      container_name: www
+      volumes:
+        - ./www:/var/www/html/
+      ports:
+        - 80:80
+      networks:
+       - redAfadima
+   api:
+     container_name: symfony-server
+     build: .
+     volumes:
+      - ./app:/app
+     ports:
+      - 8000:8000
+     links:
+      - db
+     networks:
+       - redAfadima
+   phpmyadmin:
+     image: phpmyadmin
+     container_name: phpmyadmin     
+     ports:
+       - "8080:80"
+     links:
+      - db
+     networks:
+       - redAfadima
+networks:
+  redAfadima:
+    driver: bridge

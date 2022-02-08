@@ -14,5 +14,5 @@ jobs:
           docker-compose -f docker-compose.yml build
       - name: Push
         run: |
-          docker push ${{ secrets.DOCKER_USER }}/afadima-backend:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/afadima-backend:latest    
+          docker push ${{ secrets.DOCKER_USER }}/proyectointegradoafadima_api:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/proyectointegradoafadima_apilatest    

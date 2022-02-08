@@ -14,9 +14,8 @@ jobs:
           docker-compose -f docker-compose.yml up -d
       - name: Build
         run: |
-          docker build -t ${{ secrets.DOCKER_USER }}/afadima-backend:${{ github.sha }} /
-          docker build -t ${{ secrets.DOCKER_USER }}/afadima-backend:latest /
+          docker-compose -f docker-compose.yml build db web api phpmyadmin
       - name: Push
         run: |
           docker push ${{ secrets.DOCKER_USER }}/afadima-backend:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/afadima-backend:latest
+          docker push ${{ secrets.DOCKER_USER }}/afadima-backend:latest    

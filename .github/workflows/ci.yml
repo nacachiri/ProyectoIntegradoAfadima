@@ -11,11 +11,10 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build the stack
         run: |
-          docker-compose -f docker-compose.yml up -d
+          docker-compose -f "docker-compose.yml" up -d
       - name: Build
         run: |
           docker-compose -f docker-compose.yml build db web api phpmyadmin
       - name: Push
         run: |
-          docker push ${{ secrets.DOCKER_USER }}/afadima-backend:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/afadima-backend:latest    
+          docker-compose -f docker-compose.yml push    

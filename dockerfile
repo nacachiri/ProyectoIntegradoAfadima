@@ -1,5 +1,6 @@
 FROM php:8.1.1
 WORKDIR /app
+RUN sudo su
 RUN apt-get update && apt-get install wget && apt install zip unzip && \
     wget https://get.symfony.com/cli/installer -O - | bash && \
     mv /root/.symfony/bin/symfony /usr/local/bin/symfony 

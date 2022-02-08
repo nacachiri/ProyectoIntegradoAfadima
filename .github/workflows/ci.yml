@@ -11,8 +11,8 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build
         run: |
-          docker-compose build -t ${{ secrets.DOCKER_USER }}/afadima-backend:${{ github.sha }} .
-          docker-compose build -t ${{ secrets.DOCKER_USER }}/afadima-backend:latest .
+          docker-compose build ${{ secrets.DOCKER_USER }}/afadima-backend:${{ github.sha }} .
+          docker-compose build ${{ secrets.DOCKER_USER }}/afadima-backend:latest .
       - name: Push
         run: |
           docker push ${{ secrets.DOCKER_USER }}/afadima-backend:${{ github.sha }}

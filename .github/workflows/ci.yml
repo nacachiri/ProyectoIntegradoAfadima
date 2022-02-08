@@ -3,6 +3,12 @@ name: Afadima
 on: [push]
 
 jobs:
+  docker-compose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: docker-compose -f docker-compose.yml
   cd:
     runs-on: ubuntu-latest
     steps:
@@ -11,8 +17,9 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build
         run: |
-          docker-compose -f docker-compose.yml build
+          docker build -t ${{ secrets.DOCKER_USER }}/afadima-backend:${{ github.sha }} .
+          docker build -t ${{ secrets.DOCKER_USER }}/afadima-backend:latest .
       - name: Push
         run: |
-          docker push ${{ secrets.DOCKER_USER }}/proyectointegradoafadima_api:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/proyectointegradoafadima_api:latest    
+          docker push ${{ secrets.DOCKER_USER }}/afadima-backend:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/afadima-backend:latest    

@@ -14,4 +14,4 @@ jobs:
           docker-compose -f docker-compose.yml build
       - name: Push
         run: |
-          docker-compose -f docker-compose.yml push proyectointegradoafadima_api:latest    
+          docker-compose -f docker-compose.yml push proyectointegradoafadima_api   

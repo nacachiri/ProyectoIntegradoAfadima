@@ -3,21 +3,9 @@ name: Afadima
 on: [push]
 
 jobs:
-  # ci:
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: PHPUnit Tests
-  #       uses: php-actions/phpunit@v2
-  #       env:
-  #         TEST_NAME: guerreraTest
-  #       with:
-  #         configuration: test/phpunit.xml
-  #         args: --coverage-text
   cd:
     runs-on: ubuntu-latest
-    # needs: ci
+    
 
     steps:
       - uses: actions/checkout@v1

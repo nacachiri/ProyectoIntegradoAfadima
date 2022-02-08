@@ -11,7 +11,8 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build
         run: |
-          docker-compose -f docker-compose.yml build api db phpmyadmin web
+          docker-compose -f docker-compose.yml build
       - name: Push
         run: |
-          docker-compose -f docker-compose.yml push   
+          docker push ${{ secrets.DOCKER_USER }}/proyectointegradoafadima_api:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/proyectointegradoafadima_api:latest    

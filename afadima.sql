@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-02-2022 a las 12:52:48
+-- Tiempo de generación: 09-02-2022 a las 10:53:54
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.12
 
@@ -46,7 +46,7 @@ CREATE TABLE `empleados` (
 
 CREATE TABLE `noticias` (
   `id` int(11) NOT NULL,
-  `titulo` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `description` text COLLATE utf8_spanish_ci NOT NULL,
   `imgUrl` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `empleadoId` int(11) NOT NULL
@@ -122,6 +122,17 @@ CREATE TABLE `socios` (
   `active` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipodiscapacidad`
+--
+
+CREATE TABLE `tipodiscapacidad` (
+  `typeId` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 --
 -- Índices para tablas volcadas
 --
@@ -136,19 +147,22 @@ ALTER TABLE `empleados`
 -- Indices de la tabla `noticias`
 --
 ALTER TABLE `noticias`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `empleadoId` (`empleadoId`);
 
 --
 -- Indices de la tabla `numerarios`
 --
 ALTER TABLE `numerarios`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `typeDisc` (`typeDisc`);
 
 --
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `numerarioId` (`numerarioId`);
 
 --
 -- Indices de la tabla `servicios`
@@ -160,13 +174,21 @@ ALTER TABLE `servicios`
 -- Indices de la tabla `serviciosocios`
 --
 ALTER TABLE `serviciosocios`
-  ADD PRIMARY KEY (`serviciosId`,`socioId`);
+  ADD PRIMARY KEY (`serviciosId`,`socioId`),
+  ADD KEY `socioId` (`socioId`);
 
 --
 -- Indices de la tabla `socios`
 --
 ALTER TABLE `socios`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `numerarioId` (`numerarioId`);
+
+--
+-- Indices de la tabla `tipodiscapacidad`
+--
+ALTER TABLE `tipodiscapacidad`
+  ADD PRIMARY KEY (`typeId`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -195,6 +217,47 @@ ALTER TABLE `productos`
 --
 ALTER TABLE `servicios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tipodiscapacidad`
+--
+ALTER TABLE `tipodiscapacidad`
+  MODIFY `typeId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `noticias`
+--
+ALTER TABLE `noticias`
+  ADD CONSTRAINT `noticias_ibfk_1` FOREIGN KEY (`empleadoId`) REFERENCES `empleados` (`id`);
+
+--
+-- Filtros para la tabla `numerarios`
+--
+ALTER TABLE `numerarios`
+  ADD CONSTRAINT `numerarios_ibfk_1` FOREIGN KEY (`typeDisc`) REFERENCES `tipodiscapacidad` (`typeId`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `productos`
+--
+ALTER TABLE `productos`
+  ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`numerarioId`) REFERENCES `numerarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `serviciosocios`
+--
+ALTER TABLE `serviciosocios`
+  ADD CONSTRAINT `serviciosocios_ibfk_1` FOREIGN KEY (`socioId`) REFERENCES `socios` (`id`),
+  ADD CONSTRAINT `serviciosocios_ibfk_2` FOREIGN KEY (`serviciosId`) REFERENCES `servicios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `socios`
+--
+ALTER TABLE `socios`
+  ADD CONSTRAINT `socios_ibfk_1` FOREIGN KEY (`numerarioId`) REFERENCES `numerarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

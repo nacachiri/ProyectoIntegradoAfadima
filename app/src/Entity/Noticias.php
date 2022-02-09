@@ -23,6 +23,7 @@ class Noticias
     private $imgUrl;
 
     #[ORM\ManyToOne(targetEntity: empleados::class, inversedBy: 'noticias')]
+    #[ORM\JoinColumn(name:'empleadoId', referencedColumnName:'empleadoId', nullable: false)]
     private $empleadoId;
 
     public function getId(): ?int

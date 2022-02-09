@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-02-2022 a las 10:53:54
+-- Tiempo de generación: 09-02-2022 a las 19:34:33
 -- Versión del servidor: 10.4.21-MariaDB
--- Versión de PHP: 8.0.12
+-- Versión de PHP: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -49,6 +49,7 @@ CREATE TABLE `noticias` (
   `title` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `description` text COLLATE utf8_spanish_ci NOT NULL,
   `imgUrl` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `altImg` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `empleadoId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -77,6 +78,7 @@ CREATE TABLE `productos` (
   `name` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `description` text COLLATE utf8_spanish_ci NOT NULL,
   `imgUrl` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  `altImg` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `numerarioId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 

@@ -14,9 +14,28 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SociosRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Socios::class);
+        $this->manager = $entityManager;
+    }
+
+    public function showAll()
+    {
+        $socios = $this->findAll();
+
+        foreach ($socios as $socio) {
+
+            $data[] = [
+
+                'socioId' => $socio->getId(),
+                'name' => $socio->getName(),
+    
+            ];
+
+        }
+
+        return $data;
     }
 
     // /**

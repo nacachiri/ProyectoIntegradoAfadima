@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Socios;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -29,6 +30,7 @@ class SociosRepository extends ServiceEntityRepository
             $data[] = [
 
                 'socioId' => $socio->getId(),
+                'email' => $socio->getEmail(),
                 'name' => $socio->getName(),
     
             ];

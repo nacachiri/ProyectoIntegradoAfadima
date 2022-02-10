@@ -36,8 +36,8 @@ class Socios
     #[ORM\Column(type: 'integer')]
     private $phone;
 
-    #[ORM\OneToOne(targetEntity: numerarios::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name:'numerarioId', referencedColumnName:'numerarioId', nullable: false)]
+    #[ORM\OneToOne(targetEntity: Numerarios::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name:'numerarioId', referencedColumnName:'id', nullable: false)]
     private $numerarioId;
 
     #[ORM\OneToMany(mappedBy: 'socioId', targetEntity: Servicios::class)]

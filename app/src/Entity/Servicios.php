@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\NoticiasRepository;
+use App\Repository\ServiciosRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: NoticiasRepository::class)]
-class Noticias
+#[ORM\Entity(repositoryClass: ServiciosRepository::class)]
+class Servicios
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -14,7 +14,7 @@ class Noticias
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $title;
+    private $name;
 
     #[ORM\Column(type: 'text')]
     private $description;
@@ -22,7 +22,7 @@ class Noticias
     #[ORM\Column(type: 'string', length: 255)]
     private $imgUrl;
 
-    #[ORM\ManyToOne(targetEntity: socios::class, inversedBy: 'noticias')]
+    #[ORM\ManyToOne(targetEntity: socios::class, inversedBy: 'servicios')]
     #[ORM\JoinColumn(name:'socioId', referencedColumnName:'socioId', nullable: false)]
     private $socioId;
 
@@ -31,14 +31,14 @@ class Noticias
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getName(): ?string
     {
-        return $this->title;
+        return $this->name;
     }
 
-    public function setTitle(string $title): self
+    public function setName(string $name): self
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
     }

@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\NoticiasRepository;
+use App\Repository\ProductosRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: NoticiasRepository::class)]
-class Noticias
+#[ORM\Entity(repositoryClass: ProductosRepository::class)]
+class Productos
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -14,7 +14,7 @@ class Noticias
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $title;
+    private $name;
 
     #[ORM\Column(type: 'text')]
     private $description;
@@ -22,23 +22,22 @@ class Noticias
     #[ORM\Column(type: 'string', length: 255)]
     private $imgUrl;
 
-    #[ORM\ManyToOne(targetEntity: socios::class, inversedBy: 'noticias')]
-    #[ORM\JoinColumn(name:'socioId', referencedColumnName:'socioId', nullable: false)]
-    private $socioId;
+    #[ORM\ManyToOne(targetEntity: numerarios::class, inversedBy: 'productos')]
+    private $numerarioId;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getName(): ?string
     {
-        return $this->title;
+        return $this->name;
     }
 
-    public function setTitle(string $title): self
+    public function setName(string $name): self
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
     }
@@ -67,14 +66,14 @@ class Noticias
         return $this;
     }
 
-    public function getSocioId(): ?socios
+    public function getNumerarioId(): ?numerarios
     {
-        return $this->socioId;
+        return $this->numerarioId;
     }
 
-    public function setSocioId(?socios $socioId): self
+    public function setNumerarioId(?numerarios $numerarioId): self
     {
-        $this->socioId = $socioId;
+        $this->numerarioId = $numerarioId;
 
         return $this;
     }

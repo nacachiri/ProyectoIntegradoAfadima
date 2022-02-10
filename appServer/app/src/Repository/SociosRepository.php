@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Socios;
+use App\Entity\{Socios, Numerarios};
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -31,14 +31,64 @@ class SociosRepository extends ServiceEntityRepository
 
                 'socioId' => $socio->getId(),
                 'email' => $socio->getEmail(),
+                'password' => $socio->getPassword(),
+                'rol' => $socio->getRol(),
                 'name' => $socio->getName(),
-    
+                'surnames' => $socio->getSurnames(),
+                'address' => $socio->getAddress(),
+                'phone' => $socio->getPhone(),
+                'numerarioId' => $socio->getNumerarioId()?->getName()
+
             ];
 
         }
 
         return $data;
     }
+
+    public function add($email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId)
+    {
+        $socio = new Socios();
+
+        $socio
+            ->setEmail($email)
+            ->setPassword($password)
+            ->setRol($rol)
+            ->setName($name)
+            ->setSurnames($surnames)
+            ->setAddress($address)
+            ->setPhone($phone)
+            ->setNumerarioId($this->manager->getRepository(Numerarios::class)->findOneBy(['id' => $numerarioId]));
+
+        $this->manager->persist($socio);
+        $this->manager->flush();
+        
+    }
+
+    public function edit(Socios $socio, $email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId): Socios
+    {
+
+        empty($email) ? true : $socio->setEmail($email);
+        empty($password) ? true : $socio->setPassword($password);
+        empty($rol) ? true : $socio->setRol($rol);
+        empty($name) ? true : $socio->setName($name);
+        empty($surnames) ? true : $socio->setSurnames($surnames);
+        empty($address) ? true : $socio->setAddress($address);
+        empty($phone) ? true : $socio->setPhone($phone);
+        empty($numerarioId) ? true : $socio->setNumerarioId($this->manager->getRepository(Numerarios::class)->findOneBy(['id' => $numerarioId]));
+
+        $this->manager->persist($cliente);
+        $this->manager->flush();
+
+        return $socio;
+    }
+
+    public function delete(Socios $socio)
+    {
+        $this->manager->remove($socio);
+        $this->manager->flush();
+    }
+
 
     // /**
     //  * @return Socios[] Returns an array of Socios objects

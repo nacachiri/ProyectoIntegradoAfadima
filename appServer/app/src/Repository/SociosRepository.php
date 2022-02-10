@@ -77,7 +77,7 @@ class SociosRepository extends ServiceEntityRepository
         empty($phone) ? true : $socio->setPhone($phone);
         empty($numerarioId) ? true : $socio->setNumerarioId($this->manager->getRepository(Numerarios::class)->findOneBy(['id' => $numerarioId]));
 
-        $this->manager->persist($cliente);
+        $this->manager->persist($socio);
         $this->manager->flush();
 
         return $socio;

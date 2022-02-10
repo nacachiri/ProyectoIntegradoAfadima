@@ -13,7 +13,7 @@ class TipoDiscapacidad
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', name: 'typeId')]
     private $typeId;
 
     #[ORM\Column(type: 'string', length: 255)]

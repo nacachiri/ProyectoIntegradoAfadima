@@ -21,11 +21,11 @@ class Numerarios
     #[ORM\Column(type: 'string', length: 10)]
     private $dni;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'date', name: 'birthDate')]
     private $birthDate;
 
     #[ORM\ManyToOne(targetEntity: TipoDiscapacidad::class, inversedBy: 'numerarios')]
-    #[ORM\JoinColumn(name:'typeDisc', referencedColumnName:'typeDisc', nullable: false)]
+    #[ORM\JoinColumn(name:'typeDisc', referencedColumnName:'typeId', nullable: false)]
     private $typeDisc;
 
     #[ORM\OneToMany(mappedBy: 'numerarioId', targetEntity: Productos::class)]

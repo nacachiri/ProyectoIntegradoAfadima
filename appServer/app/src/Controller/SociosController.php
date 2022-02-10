@@ -37,9 +37,9 @@ class SociosController extends AbstractController
         $surnames = $dataPost['surnames'];
         $address = $dataPost['address'];
         $phone = $dataPost['phone'];
-        $numerarioId = $dataPost['numerarioId'];
+        $numerarioId = ($dataPost['numerarioId']) ? $dataPost['numerarioId'] : null;
         
-        if (empty($email) || empty($password) || empty($rol) || empty($name) || empty($surnames) || empty($address) || empty($phone) || empty($numerarioId)) {
+        if (empty($email) || empty($password) || empty($rol) || empty($name) || empty($surnames) || empty($address) || empty($phone)) {
             throw new NotFoundHttpException('Los parametros no son correctos');
         }
 
@@ -52,7 +52,7 @@ class SociosController extends AbstractController
     public function edit($socioId, Request $request): JsonResponse
     {
         $dataPost = json_decode($request->getContent(), true);
-        $socio = $this->clienteRepository->findOneBy(['id' => $socioId]);
+        $socio = $this->sociosRepository->findOneBy(['id' => $socioId]);
 
         $email = $dataPost['email'];
         $password = $dataPost['password'];

@@ -16,7 +16,7 @@ services:
       image: nginx
       container_name: www
       volumes:
-        - ./www:/var/www/html/
+        - ./www:/usr/share/nginx/html/
       ports:
         - 80:80
       networks:

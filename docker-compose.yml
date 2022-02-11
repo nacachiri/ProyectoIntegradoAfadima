@@ -3,6 +3,8 @@ services:
    db:
      image: mysql
      container_name: mysql     
+     volumes:
+       - ./db_files:/var/lib/mysql
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: root

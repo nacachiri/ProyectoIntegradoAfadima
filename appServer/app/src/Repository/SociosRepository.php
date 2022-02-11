@@ -32,7 +32,7 @@ class SociosRepository extends ServiceEntityRepository
                 'socioId' => $socio->getId(),
                 'email' => $socio->getEmail(),
                 'password' => $socio->getPassword(),
-                'rol' => $socio->getRol(),
+                'rol' => $socio->getRoles(),
                 'name' => $socio->getName(),
                 'surnames' => $socio->getSurnames(),
                 'address' => $socio->getAddress(),

@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Noticias;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Noticias|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +15,46 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class NoticiasRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Noticias::class);
+        $this->manager = $entityManager;
+    }
+
+    public function showAll()
+    {
+        $noticias = $this->findAll();
+
+        foreach ($noticias as $noticia) {
+
+            $data[] = [
+
+                'id' => $noticia->getId(),
+                'title' => $noticia->getTitle(),
+                'description' => $noticia->getDescription(),
+                'imgUrl' => $noticia->getImgUrl(),
+                'socioId' => $noticia->getSocioId()->getName(),
+
+            ];
+
+        }
+
+        return $data;
+    }
+
+    public function add($title, $description, $imgUrl, $socioId)
+    {
+        $noticia = new Noticias();
+
+        $noticia
+            ->setTitle($title)
+            ->setDescription($description)
+            ->setImgUrl($imgUrl)
+            ->setSocioId($this->manager->getRepository(Socios::class)->findOneBy(['id' => $socioId]));
+
+        $this->manager->persist($noticia);
+        $this->manager->flush();
+
     }
 
     // /**

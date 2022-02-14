@@ -42,7 +42,7 @@ class Socios implements UserInterface, PasswordAuthenticatedUserInterface
     private $phone;
 
     #[ORM\OneToOne(targetEntity: Numerarios::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name:'numerarioId', referencedColumnName:'id', nullable: false)]
+    #[ORM\JoinColumn(name:'numerarioId', referencedColumnName:'id', nullable: true)]
     private $numerarioId;
 
     #[ORM\OneToMany(mappedBy: 'socioId', targetEntity: Servicios::class)]

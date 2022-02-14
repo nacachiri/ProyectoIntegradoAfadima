@@ -25,7 +25,7 @@ class NumerariosController extends AbstractController
     }
 
     #[Route('/{socioId}/new', name: 'numerarios_new', methods: ['POST'])]
-    public function new(Request $request): JsonResponse
+    public function new($socioId, Request $request): JsonResponse
     {
         $dataPost = json_decode($request->getContent(), true);
 
@@ -41,5 +41,35 @@ class NumerariosController extends AbstractController
         $this->numerariosRepository->add($socioId, $name, $dni, $birthDate, $typeDisc);
 
         return new JsonResponse(['status' => 'Numerarios Creado correctamente'], Response::HTTP_CREATED);
+    }
+
+    #[Route('/{numerarioId}/edit', name: 'numerarios_edit', methods: ['PUT'])]
+    public function edit($numerarioId, Request $request): JsonResponse
+    {
+        $dataPost = json_decode($request->getContent(), true);
+        $numerario = $this->numerariosRepository->findOneBy(['id' => $numerarioId]);
+
+        $name = $dataPost['name'];
+        $dni = $dataPost['dni'];
+        $birthDate = $dataPost['birthDate'];
+        $typeDisc = $dataPost['typeDisc'];
+        
+        if (empty($numerario) || empty($name) || empty($dni) || empty($birthDate) || empty($typeDisc)) {
+            throw new NotFoundHttpException('Los parametros no son correctos');
+        }
+
+        $this->numerariosRepository->edit($numerario, $name, $dni, $birthDate, $typeDisc);
+
+        return new JsonResponse(['status' => 'Numerarios Editado correctamente'], Response::HTTP_CREATED);
+    }
+
+    #[Route('/{numerarioId}', name: 'numerarios_delete', methods: ['DELETE'])]
+    public function delete($numerarioId): JsonResponse
+    {
+        $numerario = $this->numerariosRepository->findOneBy(['id' => $numerarioId]);
+
+        $this->numerariosRepository->delete($numerario);
+
+        return new JsonResponse(['status' => 'Nunerarios Borrado correctamente'], Response::HTTP_OK);
     }
 }

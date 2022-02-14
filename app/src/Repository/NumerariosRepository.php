@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\{Numerarios, Socios, TipoDiscapacidad};
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\{Numerarios, Socios, TipoDiscapacidad};
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Numerarios|null find($id, $lockMode = null, $lockVersion = null)
@@ -49,8 +50,8 @@ class NumerariosRepository extends ServiceEntityRepository
         $numerario
             ->setName($name)
             ->setDni($dni)
-            ->setBirthDate($birthDate)
-            ->setTypeDisc($this->manager->getRepository(TipoDiscapacidad::class)->findOneBy(['id' => $typeDisc]));
+            ->setBirthDate(new DateTime($birthDate))
+            ->setTypeDisc($this->manager->getRepository(TipoDiscapacidad::class)->findOneBy(['typeId' => $typeDisc]));
 
         $this->manager->persist($numerario);
         $this->manager->flush();
@@ -68,14 +69,12 @@ class NumerariosRepository extends ServiceEntityRepository
         empty($name) ? true : $numerario->setName($name);
         empty($dni) ? true : $numerario->setDni($dni);
         empty($birthDate) ? true : $numerario->setBirthDate($birthDate);
-        empty($typeDisc) ? true : $numerario->setTypeDisc($this->manager->getRepository(TipoDiscapacidad::class)->findOneBy(['id' => $typeDisc]));
-        empty($socio) ? true : $socio->setNumerarioId($numerario);
+        empty($typeDisc) ? true : $numerario->setTypeDisc($this->manager->getRepository(TipoDiscapacidad::class)->findOneBy(['typeId' => $typeDisc]));
 
-        $this->manager->persist($socio);
         $this->manager->persist($numerario);
         $this->manager->flush();
 
-        return $numeraro;
+        return $numerario;
     }
 
     public function delete(Numerarios $numerario)

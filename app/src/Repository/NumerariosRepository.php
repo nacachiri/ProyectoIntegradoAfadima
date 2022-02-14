@@ -63,12 +63,12 @@ class NumerariosRepository extends ServiceEntityRepository
         $this->manager->flush();
     }
 
-    public function edit(Numerarios $numerario, $socio, $name, $dni, $birthDate, $typeDisc): Numerarios
+    public function edit(Numerarios $numerario, $name, $dni, $birthDate, $typeDisc): Numerarios
     {
 
         empty($name) ? true : $numerario->setName($name);
         empty($dni) ? true : $numerario->setDni($dni);
-        empty($birthDate) ? true : $numerario->setBirthDate($birthDate);
+        empty($birthDate) ? true : $numerario->setBirthDate(new DateTime($birthDate));
         empty($typeDisc) ? true : $numerario->setTypeDisc($this->manager->getRepository(TipoDiscapacidad::class)->findOneBy(['typeId' => $typeDisc]));
 
         $this->manager->persist($numerario);

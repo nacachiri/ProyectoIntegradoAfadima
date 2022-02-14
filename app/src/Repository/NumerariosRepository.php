@@ -42,7 +42,7 @@ class NumerariosRepository extends ServiceEntityRepository
         return $data;
     }
 
-    public function add($socio, $name, $dni, $birthDate, $typeDisc)
+    public function add($socioId, $name, $dni, $birthDate, $typeDisc)
     {
         $numerario = new Numerarios();
 
@@ -55,7 +55,7 @@ class NumerariosRepository extends ServiceEntityRepository
         $this->manager->persist($numerario);
         $this->manager->flush();
 
-        $socio = $this->manager->getRepository(Socios::class)->findOneBy(['id' => $socio]);
+        $socio = $this->manager->getRepository(Socios::class)->findOneBy(['id' => $socioId]);
         $socio->setNumerarioId($numerario);
 
         $this->manager->persist($socio);

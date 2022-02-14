@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\TipoDiscapacidad;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method TipoDiscapacidad|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +15,55 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TipoDiscapacidadRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, TipoDiscapacidad::class);
+        $this->manager = $entityManager;
+    }
+
+    public function showAll()
+    {
+        $tipoDiscapacidades = $this->findAll();
+
+        foreach ($tipoDiscapacidades as $tipoDiscapacidad) {
+
+            $data[] = [
+
+                'typeId' => $tipoDiscapacidad->getTypeId(),
+                'name' => $tipoDiscapacidad->getName(),
+
+            ];
+
+        }
+
+        return $data;
+    }
+
+    public function add($name)
+    {
+        $tipoDiscapacidad = new TipoDiscapacidad();
+
+        $tipoDiscapacidad
+            ->setName($name);
+
+        $this->manager->persist($tipoDiscapacidad);
+        $this->manager->flush();
+    }
+
+    public function edit(TipoDiscapacidad $tipoDiscapacidad, $name): TipoDiscapacidad
+    {
+        empty($name) ? true : $tipoDiscapacidad->setName($name);
+       
+        $this->manager->persist($tipoDiscapacidad);
+        $this->manager->flush();
+
+        return $tipoDiscapacidad;
+    }
+
+    public function delete(TipoDiscapacidad $tipoDiscapacidad)
+    {
+        $this->manager->remove($tipoDiscapacidad);
+        $this->manager->flush();
     }
 
     // /**

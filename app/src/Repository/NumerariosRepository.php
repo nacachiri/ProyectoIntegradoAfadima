@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Numerarios;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,9 +15,26 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class NumerariosRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Numerarios::class);
+        $this->manager = $entityManager;
+    }
+
+    public function showAll()
+    {
+        $numerarios = $this->findAll();
+
+        foreach ($numerarios as $numerario) {
+
+            $data[] = [
+
+
+            ];
+
+        }
+
+        return $data;
     }
 
     // /**

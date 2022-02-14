@@ -1,0 +1,20 @@
+body{
+    background-color: #FFFAF0;
+}
+.bocadillo-cuadrado {
+    position: relative;
+    height: 200px;
+    width: 600px;
+    background: #E5E5E5;
+    
+}
+.bocadillo-cuadrado:before {
+    border: 25px solid #E5E5E5;
+    content: '';
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    top: -48px;
+    left: calc(50% - 25px)
+}

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Numerarios;
+use App\Entity\{Numerarios, Socios, TipoDiscapacidad};
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -29,13 +29,59 @@ class NumerariosRepository extends ServiceEntityRepository
 
             $data[] = [
 
-                
+                'numerarioId' => $numerario->getId(),
+                'name' => $numerario->getName(),
+                'dni' => $numerario->getDni(),
+                'birthDate' => $numerario->getBirthDate()->format('Y-m-d'),
+                'typeDisc' => $numerario->getTypeDisc()->getName(),
 
             ];
 
         }
 
         return $data;
+    }
+
+    public function add($socio, $name, $dni, $birthDate, $typeDisc)
+    {
+        $numerario = new Numerarios();
+
+        $numerario
+            ->setName($name)
+            ->setDni($dni)
+            ->setBirthDate($birthDate)
+            ->setTypeDisc($this->manager->getRepository(TipoDiscapacidad::class)->findOneBy(['id' => $typeDisc]));
+
+        $this->manager->persist($numerario);
+        $this->manager->flush();
+
+        $socio = $this->manager->getRepository(Socios::class)->findOneBy(['id' => $socio]);
+        $socio->setNumerarioId($numerario);
+
+        $this->manager->persist($socio);
+        $this->manager->flush();
+    }
+
+    public function edit(Numerarios $numerario, $socio, $name, $dni, $birthDate, $typeDisc): Numerarios
+    {
+
+        empty($name) ? true : $numerario->setName($name);
+        empty($dni) ? true : $numerario->setDni($dni);
+        empty($birthDate) ? true : $numerario->setBirthDate($birthDate);
+        empty($typeDisc) ? true : $numerario->setTypeDisc($this->manager->getRepository(TipoDiscapacidad::class)->findOneBy(['id' => $typeDisc]));
+        empty($socio) ? true : $socio->setNumerarioId($numerario);
+
+        $this->manager->persist($socio);
+        $this->manager->persist($numerario);
+        $this->manager->flush();
+
+        return $numeraro;
+    }
+
+    public function delete(Numerarios $numerario)
+    {
+        $this->manager->remove($numerario);
+        $this->manager->flush();
     }
 
     // /**

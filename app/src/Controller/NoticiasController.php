@@ -25,21 +25,25 @@ class NoticiasController extends AbstractController
         return new JsonResponse($this->noticiasRepository->showAll(), Response::HTTP_OK);
     }
 
-    #[Route('/{noticiaId}/new', name: 'noticias_new', methods: ['POST'])]
-    public function new($noticiaId, Request $request): JsonResponse
+    #[Route('/new', name: 'noticias_new', methods: ['POST'])]
+    public function new(Request $request): JsonResponse
     {
+        $imagen =$request->files->get('image');
         $dataPost = json_decode($request->getContent(), true);
+
+        $imgUrl = uniqid().'.'.$imagen->getClientOriginalExtension();
+
+        move_uploaded_file($imagen->getRealPath(), '../src/Imagenes/'.$imgUrl);
 
         $title = $dataPost['title'];
         $description = $dataPost['description'];
-        $imgUrl = $dataPost['imgUrl'];
         $socioId = $dataPost['socioId'];
         
-        if (empty($noticiaId) || empty($title) || empty($description) || empty($imgUrl) || empty($socioId)) {
+        if (empty($title) || empty($description) || empty($socioId)) {
             throw new NotFoundHttpException('Los parametros no son correctos');
         }
 
-        $this->noticiasRepository->add($noticiaId, $title, $description, $imgUrl, $socioId);
+        $this->noticiasRepository->add($title, $description, $imgUrl, $socioId);
 
         return new JsonResponse(['status' => 'Noticia Creada correctamente'], Response::HTTP_CREATED);
     }

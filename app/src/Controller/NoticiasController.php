@@ -29,16 +29,14 @@ class NoticiasController extends AbstractController
     public function new(Request $request): JsonResponse
     {
         $imagen =$request->files->get('image');
-        $dataPost = json_decode($request->getContent(), true);
+        $title = $request->request->get('title');
+        $description = $request->request->get('description');
+        $socioId = $request->request->get('socioId');
 
         $imgUrl = uniqid().'.'.$imagen->getClientOriginalExtension();
 
         move_uploaded_file($imagen->getRealPath(), '../src/Imagenes/'.$imgUrl);
 
-        $title = $dataPost['title'];
-        $description = $dataPost['description'];
-        $socioId = $dataPost['socioId'];
-        
         if (empty($title) || empty($description) || empty($socioId)) {
             throw new NotFoundHttpException('Los parametros no son correctos');
         }

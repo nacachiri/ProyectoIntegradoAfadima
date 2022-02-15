@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Noticias;
+use App\Entity\{Noticias, Socios};
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -32,7 +32,7 @@ class NoticiasRepository extends ServiceEntityRepository
                 'id' => $noticia->getId(),
                 'title' => $noticia->getTitle(),
                 'description' => $noticia->getDescription(),
-                'imgUrl' => $noticia->getImgUrl(),
+                'imgUrl' => '/src/Imagenes/'.$noticia->getImgUrl(),
                 'socioId' => $noticia->getSocioId()->getName(),
 
             ];

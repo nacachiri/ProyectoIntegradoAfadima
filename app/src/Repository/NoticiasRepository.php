@@ -32,7 +32,7 @@ class NoticiasRepository extends ServiceEntityRepository
                 'id' => $noticia->getId(),
                 'title' => $noticia->getTitle(),
                 'description' => $noticia->getDescription(),
-                'imgUrl' => '/src/Imagenes/'.$noticia->getImgUrl(),
+                'imgUrl' => '/Imagenes/'.$noticia->getImgUrl(),
                 'socioId' => $noticia->getSocioId()->getName(),
 
             ];

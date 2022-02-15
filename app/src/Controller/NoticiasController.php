@@ -35,7 +35,7 @@ class NoticiasController extends AbstractController
 
         $imgUrl = uniqid().'.'.$imagen->getClientOriginalExtension();
 
-        move_uploaded_file($imagen->getRealPath(), '../src/Imagenes/'.$imgUrl);
+        move_uploaded_file($imagen->getRealPath(), 'Imagenes/'.$imgUrl);
 
         if (empty($title) || empty($description) || empty($socioId)) {
             throw new NotFoundHttpException('Los parametros no son correctos');

@@ -35,7 +35,7 @@ class NoticiasController extends AbstractController
 
         $imgUrl = uniqid().'.'.$imagen->getClientOriginalExtension();
 
-        move_uploaded_file($imagen->getRealPath(), 'Imagenes/'.$imgUrl);
+        move_uploaded_file($imagen->getRealPath(), 'Imagenes/noticias/'.$imgUrl);
 
         if (empty($title) || empty($description) || empty($socioId)) {
             throw new NotFoundHttpException('Los parametros no son correctos');
@@ -46,4 +46,26 @@ class NoticiasController extends AbstractController
         return new JsonResponse(['status' => 'Noticia Creada correctamente'], Response::HTTP_CREATED);
     }
 
+    #[Route('/{noticiaId}/edit', name: 'noticias_edit', methods: ['POST'])]
+    public function edit($noticiaId, Request $request): JsonResponse
+    {
+        $noticia = $this->noticiasRepository->findOneBy(['id' => $noticiaId]);
+        $imagen =$request->files->get('image');
+        $title = $request->request->get('title');
+        $description = $request->request->get('description');
+        $socioId = $request->request->get('socioId');
+
+        $this->noticiasRepository->edit($noticia, $imagen, $title, $description, $socioId);
+
+        return new JsonResponse(['status' => 'Noticia Editada correctamente'], Response::HTTP_CREATED);
+    }
+
+    #[Route('/{noticiaId}', name: 'noticias_delete', methods: ['DELETE'])]
+    public function delete($noticiaId): JsonResponse
+    {
+        $this->noticiasRepository->delete($noticiaId);
+
+        return new JsonResponse(['status' => 'Noticia Borrado correctamente'], Response::HTTP_OK);
+    }
+    
 }

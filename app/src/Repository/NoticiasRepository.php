@@ -57,6 +57,29 @@ class NoticiasRepository extends ServiceEntityRepository
 
     }
 
+    public function edit(Noticias $noticia, $imagen, $title, $description, $socioId): Noticias
+    {
+        empty($title) ? true : $noticia->setTitle($title);
+        empty($description) ? true : $noticia->setDescription($description);
+        empty($socioId) ? true : $noticia->setSocioId($this->manager->getRepository(Socios::class)->findOneBy(['id' => $socioId]));
+        empty($imagen) ? true : move_uploaded_file($imagen->getRealPath(), 'Imagenes/noticias/'.$noticia->getImgUrl());
+
+        $this->manager->persist($noticia);
+        $this->manager->flush();
+
+        return $noticia;
+    }
+
+    public function delete($noticiaId)
+    {
+        $noticia = $this->findOneBy(['id' => $noticiaId]);
+        unlink('Imagenes/noticias/'.$noticia->getImgUrl());
+        $this->manager->remove($noticia);
+        $this->manager->flush();
+    }
+
+    
+
     // /**
     //  * @return Noticias[] Returns an array of Noticias objects
     //  */

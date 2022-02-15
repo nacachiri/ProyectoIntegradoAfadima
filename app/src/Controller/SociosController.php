@@ -54,6 +54,10 @@ class SociosController extends AbstractController
         $dataPost = json_decode($request->getContent(), true);
         $socio = $this->sociosRepository->findOneBy(['id' => $socioId]);
 
+        if ($socio == null) {
+            throw new NotFoundHttpException('Socio no encotrado');
+        }
+
         $email = $dataPost['email'];
         $password = $dataPost['password'];
         $rol = $dataPost['rol'];
@@ -73,6 +77,10 @@ class SociosController extends AbstractController
     {
         $socio = $this->sociosRepository->findOneBy(['id' => $socioId]);
 
+        if ($socio == null) {
+            throw new NotFoundHttpException('Socio no encotrado');
+        }
+
         $this->sociosRepository->delete($socio);
 
         return new JsonResponse(['status' => 'Socio Borrado correctamente'], Response::HTTP_OK);
@@ -82,6 +90,11 @@ class SociosController extends AbstractController
     public function emailId($email): JsonResponse
     {
         $socio = $this->sociosRepository->findOneBy(['email' => $email]);
+
+        if ($socio == null) {
+            throw new NotFoundHttpException('Socio no encotrado');
+        }
+
         return new JsonResponse(['id' => $socio->getId()], Response::HTTP_OK);
     }
 }

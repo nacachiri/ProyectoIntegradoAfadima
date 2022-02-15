@@ -6,6 +6,7 @@ use App\Entity\{Noticias, Socios};
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method Noticias|null find($id, $lockMode = null, $lockVersion = null)
@@ -73,6 +74,11 @@ class NoticiasRepository extends ServiceEntityRepository
     public function delete($noticiaId)
     {
         $noticia = $this->findOneBy(['id' => $noticiaId]);
+
+        if ($noticia == null) {
+            throw new NotFoundHttpException('Noticia no encotrada');
+        }
+        
         unlink('Imagenes/noticias/'.$noticia->getImgUrl());
         $this->manager->remove($noticia);
         $this->manager->flush();

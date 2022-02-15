@@ -50,6 +50,9 @@ class NoticiasController extends AbstractController
     public function edit($noticiaId, Request $request): JsonResponse
     {
         $noticia = $this->noticiasRepository->findOneBy(['id' => $noticiaId]);
+        if ($noticia == null) {
+            throw new NotFoundHttpException('Noticia no encotrada');
+        }
         $imagen =$request->files->get('image');
         $title = $request->request->get('title');
         $description = $request->request->get('description');

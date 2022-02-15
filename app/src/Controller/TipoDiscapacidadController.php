@@ -62,6 +62,10 @@ class TipoDiscapacidadController extends AbstractController
     {
         $tipoDiscapacidad = $this->tipoDiscapacidadRepository->findOneBy(['typeId' => $tipoDiscapacidadId]);
 
+        if ($tipoDiscapacidad == null) {
+            throw new NotFoundHttpException('Tipo Discapacidad no encotrado');
+        }
+
         $this->tipoDiscapacidadRepository->delete($tipoDiscapacidad);
 
         return new JsonResponse(['status' => 'TipoDiscapacidad Borrado correctamente'], Response::HTTP_OK);

@@ -49,6 +49,10 @@ class NumerariosController extends AbstractController
         $dataPost = json_decode($request->getContent(), true);
         $numerario = $this->numerariosRepository->findOneBy(['id' => $numerarioId]);
 
+        if ($numerario == null) {
+            throw new NotFoundHttpException('Numerario no encotrado');
+        }
+
         $name = $dataPost['name'];
         $dni = $dataPost['dni'];
         $birthDate = $dataPost['birthDate'];
@@ -67,6 +71,10 @@ class NumerariosController extends AbstractController
     public function delete($numerarioId): JsonResponse
     {
         $numerario = $this->numerariosRepository->findOneBy(['id' => $numerarioId]);
+
+        if ($numerario == null) {
+            throw new NotFoundHttpException('Numerario no encotrado');
+        }
 
         $this->numerariosRepository->delete($numerario);
 

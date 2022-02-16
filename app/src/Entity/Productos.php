@@ -22,7 +22,7 @@ class Productos
     #[ORM\Column(type: 'string', length: 255)]
     private $imgUrl;
 
-    #[ORM\ManyToOne(targetEntity: numerarios::class, inversedBy: 'productos')]
+    #[ORM\ManyToOne(targetEntity: Numerarios::class, inversedBy: 'productos')]
     private $numerarioId;
 
     public function getId(): ?int

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Productos;
+use App\Entity\{Productos, Numerarios};
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

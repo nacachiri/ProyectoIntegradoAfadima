@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+#[Route('/api/productos')]
 class ProductosController extends AbstractController
 {
     public function __construct(ProductosRepository $productosRepository)

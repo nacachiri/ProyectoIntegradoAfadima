@@ -25,6 +25,12 @@ class SociosController extends AbstractController
         return new JsonResponse($this->sociosRepository->showAll(), Response::HTTP_OK);
     }
 
+    #[Route('/{id}', name: 'socios_id', methods: ['GET'])]
+    public function showId($id): JsonResponse
+    {
+        return new JsonResponse($this->sociosRepository->showId($id), Response::HTTP_OK);
+    }
+
     #[Route('/new', name: 'socios_new', methods: ['POST'])]
     public function new(Request $request): JsonResponse
     {
@@ -86,7 +92,7 @@ class SociosController extends AbstractController
         return new JsonResponse(['status' => 'Socio Borrado correctamente'], Response::HTTP_OK);
     }
 
-    #[Route('/{email}', name: 'socios_email', methods: ['GET'])]
+    #[Route('/email/{email}', name: 'socios_email', methods: ['GET'])]
     public function emailId($email): JsonResponse
     {
         $socio = $this->sociosRepository->findOneBy(['email' => $email]);

@@ -48,6 +48,27 @@ class SociosRepository extends ServiceEntityRepository
         return $data;
     }
 
+    public function showId($id)
+    {
+        $socio = $this->findOneBy(['id' => $id]);
+
+        $data = [
+
+            'socioId' => $socio->getId(),
+            'email' => $socio->getEmail(),
+            'password' => $socio->getPassword(),
+            'rol' => $socio->getRoles(),
+            'name' => $socio->getName(),
+            'surnames' => $socio->getSurnames(),
+            'address' => $socio->getAddress(),
+            'phone' => $socio->getPhone(),
+            'numerarioId' => $socio->getNumerarioId()?->getName()
+
+        ];
+
+        return $data;
+    }
+
     public function add($email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId)
     {
         $socio = new Socios();

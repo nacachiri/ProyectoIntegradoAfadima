@@ -43,6 +43,23 @@ class NoticiasRepository extends ServiceEntityRepository
         return $data;
     }
 
+    public function showId($id)
+    {
+        $noticia = $this->findOneBy(['id' => $id]);
+
+        $data = [
+
+            'id' => $noticia->getId(),
+            'title' => $noticia->getTitle(),
+            'description' => $noticia->getDescription(),
+            'imgUrl' => 'Imagenes/noticias/'.$noticia->getImgUrl(),
+            'socioId' => $noticia->getSocioId()->getName(),
+
+        ];
+
+        return $data;
+    }
+
     public function add($title, $description, $imgUrl, $socioId)
     {
         $noticia = new Noticias();

@@ -24,6 +24,12 @@ class NumerariosController extends AbstractController
         return new JsonResponse($this->numerariosRepository->showAll(), Response::HTTP_OK);
     }
 
+    #[Route('/{id}', name: 'numerarios_id', methods: ['GET'])]
+    public function showId($id): JsonResponse
+    {
+        return new JsonResponse($this->numerariosRepository->showId($id), Response::HTTP_OK);
+    }
+
     #[Route('/{socioId}/new', name: 'numerarios_new', methods: ['POST'])]
     public function new($socioId, Request $request): JsonResponse
     {

@@ -43,6 +43,23 @@ class NumerariosRepository extends ServiceEntityRepository
         return $data;
     }
 
+    public function showId($id)
+    {
+        $numerario = $this->findOneBy(['id' => $id]);
+
+        $data = [
+
+            'numerarioId' => $numerario->getId(),
+            'name' => $numerario->getName(),
+            'dni' => $numerario->getDni(),
+            'birthDate' => $numerario->getBirthDate()->format('Y-m-d'),
+            'typeDisc' => $numerario->getTypeDisc()->getName(),
+
+        ];
+
+        return $data;
+    }
+
     public function add($socioId, $name, $dni, $birthDate, $typeDisc)
     {
         $numerario = new Numerarios();

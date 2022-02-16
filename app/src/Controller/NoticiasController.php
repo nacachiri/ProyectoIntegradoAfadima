@@ -25,6 +25,13 @@ class NoticiasController extends AbstractController
         return new JsonResponse($this->noticiasRepository->showAll(), Response::HTTP_OK);
     }
 
+    
+    #[Route('/{id}', name: 'noticias_id', methods: ['GET'])]
+    public function showId($id): JsonResponse
+    {
+        return new JsonResponse($this->noticiasRepository->showId($id), Response::HTTP_OK);
+    }
+
     #[Route('/new', name: 'noticias_new', methods: ['POST'])]
     public function new(Request $request): JsonResponse
     {

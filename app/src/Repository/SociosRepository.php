@@ -6,7 +6,7 @@ use App\Entity\{Socios, Numerarios};
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @method Socios|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,10 +16,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class SociosRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder)
     {
         parent::__construct($registry, Socios::class);
         $this->manager = $entityManager;
+        $this->encoder = $encoder;
     }
 
     public function showAll()
@@ -47,11 +48,11 @@ class SociosRepository extends ServiceEntityRepository
         return $data;
     }
 
-    public function add($email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId, UserPasswordEncoderInterface $encoder)
+    public function add($email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId)
     {
         $socio = new Socios();
 
-        $encoded = $encoder->encodePassword($socio, $password);
+        $encoded = $this->encoder->hashPassword($socio, $password);
 
         $socio
             ->setEmail($email)
@@ -68,11 +69,11 @@ class SociosRepository extends ServiceEntityRepository
         
     }
 
-    public function edit(Socios $socio, $email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId, UserPasswordEncoderInterface $encoder): Socios
+    public function edit(Socios $socio, $email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId): Socios
     {
 
         empty($email) ? true : $socio->setEmail($email);
-        empty($password) ? true : $socio->setPassword($encoder->encodePassword($socio, $password));
+        empty($password) ? true : $socio->setPassword($this->encoder->hashPassword($socio, $password));
         empty($rol) ? true : $socio->setRol($rol);
         empty($name) ? true : $socio->setName($name);
         empty($surnames) ? true : $socio->setSurnames($surnames);

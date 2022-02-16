@@ -6,6 +6,7 @@ use App\Entity\{Socios, Numerarios};
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @method Socios|null find($id, $lockMode = null, $lockVersion = null)
@@ -46,13 +47,15 @@ class SociosRepository extends ServiceEntityRepository
         return $data;
     }
 
-    public function add($email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId)
+    public function add($email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId, UserPasswordEncoderInterface $encoder)
     {
         $socio = new Socios();
 
+        $encoded = $encoder->encodePassword($socio, $password);
+
         $socio
             ->setEmail($email)
-            ->setPassword($password)
+            ->setPassword($encoded)
             ->setRol($rol)
             ->setName($name)
             ->setSurnames($surnames)
@@ -65,11 +68,11 @@ class SociosRepository extends ServiceEntityRepository
         
     }
 
-    public function edit(Socios $socio, $email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId): Socios
+    public function edit(Socios $socio, $email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId, UserPasswordEncoderInterface $encoder): Socios
     {
 
         empty($email) ? true : $socio->setEmail($email);
-        empty($password) ? true : $socio->setPassword($password);
+        empty($password) ? true : $socio->setPassword($encoder->encodePassword($socio, $password));
         empty($rol) ? true : $socio->setRol($rol);
         empty($name) ? true : $socio->setName($name);
         empty($surnames) ? true : $socio->setSurnames($surnames);

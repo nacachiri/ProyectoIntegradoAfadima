@@ -39,6 +39,20 @@ class TipoDiscapacidadRepository extends ServiceEntityRepository
         return $data;
     }
 
+    public function showId($id)
+    {
+        $tipoDiscapacidad = $this->findOneBy(['typeId' => $id]);
+
+        $data = [
+
+            'typeId' => $tipoDiscapacidad->getTypeId(),
+            'name' => $tipoDiscapacidad->getName(),
+
+        ];
+
+        return $data;
+    }
+
     public function add($name)
     {
         $tipoDiscapacidad = new TipoDiscapacidad();

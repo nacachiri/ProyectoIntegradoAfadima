@@ -24,6 +24,12 @@ class TipoDiscapacidadController extends AbstractController
         return new JsonResponse($this->tipoDiscapacidadRepository->showAll(), Response::HTTP_OK);
     }
 
+    #[Route('/{id}', name: 'tipoDiscapacidad_id', methods: ['GET'])]
+    public function showId($id): JsonResponse
+    {
+        return new JsonResponse($this->tipoDiscapacidadRepository->showId($id), Response::HTTP_OK);
+    }
+
     #[Route('/new', name: 'tipoDiscapacidad_new', methods: ['POST'])]
     public function new(Request $request): JsonResponse
     {

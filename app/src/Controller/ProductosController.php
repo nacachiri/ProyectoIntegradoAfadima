@@ -51,7 +51,7 @@ class ProductosController extends AbstractController
         return new JsonResponse(['status' => 'Producto Creada correctamente'], Response::HTTP_CREATED);
     }
 
-    #[Route('/{productoId}/edit', name: '', methods: ['POST'])]
+    #[Route('/{productoId}/edit', name: 'productos_edit', methods: ['POST'])]
     public function edit($productoId, Request $request): JsonResponse
     {
         $producto = $this->productosRepository->findOneBy(['id' => $productoId]);

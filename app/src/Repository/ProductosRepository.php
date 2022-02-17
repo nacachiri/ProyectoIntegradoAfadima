@@ -77,7 +77,7 @@ class ProductosRepository extends ServiceEntityRepository
 
     public function edit(Productos $producto, $imagen, $name, $description, $numerarioId): Productos
     {
-        empty($title) ? true : $producto->setName($name);
+        empty($name) ? true : $producto->setName($name);
         empty($description) ? true : $producto->setDescription($description);
         empty($socioId) ? true : $producto->setNumerarioId($this->manager->getRepository(Numerarios::class)->findOneBy(['id' => $numerarioId]));
         empty($imagen) ? true : move_uploaded_file($imagen->getRealPath(), 'Imagenes/productos/'.$producto->getImgUrl());

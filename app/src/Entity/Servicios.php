@@ -22,7 +22,7 @@ class Servicios
     #[ORM\Column(type: 'string', length: 255)]
     private $imgUrl;
 
-    #[ORM\ManyToOne(targetEntity: socios::class, inversedBy: 'servicios')]
+    #[ORM\ManyToOne(targetEntity: Socios::class, inversedBy: 'servicios')]
     #[ORM\JoinColumn(name:'socioId', referencedColumnName:'id', nullable: false)]
     private $socioId;
 

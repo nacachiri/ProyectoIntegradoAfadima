@@ -88,7 +88,7 @@ class ServiciosRepository extends ServiceEntityRepository
         empty($name) ? true : $service->setName($name);
         empty($description) ? true : $service->setDescription($description);
         empty($socioId) ? true : $service->setNumerarioId($this->manager->getRepository(Numerarios::class)->findOneBy(['id' => $socioId]));
-        empty($imagen) ? true : move_uploaded_file($imagen->getRealPath(), 'Imagenes/productos/'.$service->getImgUrl());
+        empty($imagen) ? true : move_uploaded_file($imagen->getRealPath(), 'Imagenes/servicios/'.$service->getImgUrl());
 
         $this->manager->persist($service);
         $this->manager->flush();
@@ -104,7 +104,7 @@ class ServiciosRepository extends ServiceEntityRepository
             throw new NotFoundHttpException('Servicio no encotrado');
         }
         
-        unlink('Imagenes/productos/'.$service->getImgUrl());
+        unlink('Imagenes/servicios/'.$service->getImgUrl());
         $this->manager->remove($service);
         $this->manager->flush();
     }

@@ -93,7 +93,7 @@ class ProductosRepository extends ServiceEntityRepository
         $producto = $this->findOneBy(['id' => $productoId]);
 
         if ($producto == null) {
-            throw new NotFoundHttpException('Noticia no encotrada');
+            throw new NotFoundHttpException('Producto no encotrado');
         }
         
         unlink('Imagenes/productos/'.$producto->getImgUrl());

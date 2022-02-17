@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\Servicios;
+use App\Entity\{Servicios, Socios};
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method Servicios|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,10 +16,91 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ServiciosRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Servicios::class);
+        $this->manager = $entityManager;
     }
+
+    public function showAll()
+    {
+        $service = $this->findAll();
+
+        foreach ($services as $service) {
+
+            $data[] = [
+
+                'id' => $service->getId(),
+                'name' => $service->getName(),
+                'description' => $service->getDescription(),
+                'imgUrl' => 'Imagenes/servicios/'.$service->getImgUrl(),
+                'socioId' => $service->getSocioId()->getName(),
+
+            ];
+
+        }
+
+        return $data;
+    }
+
+    public function showId($id)
+    {
+        $service = $this->findOneBy(['id' => $id]);
+
+        $data = [
+
+            'id' => $service->getId(),
+            'name' => $service->getName(),
+            'description' => $service->getDescription(),
+            'imgUrl' => 'Imagenes/servicios/'.$service->getImgUrl(),
+            'socioId' => $service->getSocioId()->getName(),
+
+        ];
+
+        return $data;
+    }
+
+    public function add($name, $description, $imgUrl, $socioId)
+    {
+        $service = new Servicios();
+
+        $service
+            ->setName($name)
+            ->setDescription($description)
+            ->setImgUrl($imgUrl)
+            ->setSocioId($this->manager->getRepository(Socios::class)->findOneBy(['id' => $socioId]));
+
+        $this->manager->persist($service);
+        $this->manager->flush();
+
+    }
+
+    public function edit(Servicios $service, $imagen, $name, $description, $socioId): Servicios
+    {
+        empty($name) ? true : $service->setName($name);
+        empty($description) ? true : $service->setDescription($description);
+        empty($socioId) ? true : $service->setNumerarioId($this->manager->getRepository(Numerarios::class)->findOneBy(['id' => $socioId]));
+        empty($imagen) ? true : move_uploaded_file($imagen->getRealPath(), 'Imagenes/productos/'.$service->getImgUrl());
+
+        $this->manager->persist($service);
+        $this->manager->flush();
+
+        return $service;
+    }
+
+    public function delete($serviceId)
+    {
+        $service = $this->findOneBy(['id' => $serviceId]);
+
+        if ($service == null) {
+            throw new NotFoundHttpException('Servicio no encotrado');
+        }
+        
+        unlink('Imagenes/productos/'.$service->getImgUrl());
+        $this->manager->remove($service);
+        $this->manager->flush();
+    }
+
 
     // /**
     //  * @return Servicios[] Returns an array of Servicios objects

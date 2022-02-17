@@ -48,7 +48,7 @@ class ProductosController extends AbstractController
 
         $this->productosRepository->add($name, $description, $imgUrl, $numerarioId);
 
-        return new JsonResponse(['status' => 'Producto Creada correctamente'], Response::HTTP_CREATED);
+        return new JsonResponse(['status' => 'Producto Creado correctamente'], Response::HTTP_CREATED);
     }
 
     #[Route('/{productoId}/edit', name: 'productos_edit', methods: ['POST'])]
@@ -56,7 +56,7 @@ class ProductosController extends AbstractController
     {
         $producto = $this->productosRepository->findOneBy(['id' => $productoId]);
         if ($producto == null) {
-            throw new NotFoundHttpException('Producto no encotrada');
+            throw new NotFoundHttpException('Producto no encotrado');
         }
         $imagen =$request->files->get('image');
         $name = $request->request->get('name');
@@ -65,7 +65,7 @@ class ProductosController extends AbstractController
 
         $this->productosRepository->edit($producto, $imagen, $name, $description, $numerarioId);
 
-        return new JsonResponse(['status' => 'Producto Editada correctamente'], Response::HTTP_CREATED);
+        return new JsonResponse(['status' => 'Producto Editado correctamente'], Response::HTTP_CREATED);
     }
 
     #[Route('/{productoId}', name: 'productos_delete', methods: ['DELETE'])]
@@ -75,6 +75,5 @@ class ProductosController extends AbstractController
 
         return new JsonResponse(['status' => 'Producto Borrado correctamente'], Response::HTTP_OK);
     }
-
 
 }

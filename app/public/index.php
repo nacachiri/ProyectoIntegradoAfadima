@@ -5,7 +5,8 @@ use App\Kernel;
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
 
-ini_set('upload_max_filesize', 500);
+ini_set('upload_max_filesize', 50);
+ini_set('upload_max_filesize', 50);
 phpinfo();
 
 return function (array $context) {

@@ -2,8 +2,8 @@
 
 use App\Kernel;
 
-ini_set( "post_max_size", "500M");
-ini_set( "upload_max_filesize", "500M");
+echo ini_set( "post_max_size", "500M");
+echo ini_set( "upload_max_filesize", "500M");
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 

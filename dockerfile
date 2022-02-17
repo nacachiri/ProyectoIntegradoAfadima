@@ -6,4 +6,4 @@ RUN apt-get update && apt-get install wget && apt install zip unzip && \
 RUN docker-php-ext-install pdo pdo_mysql
 RUN wget -O compose-setup.php https://getcomposer.org/installer && \
     php compose-setup.php --install-dir=/usr/local/bin/ --filename=composer.php
-CMD [ "symfony", "server:start"]
+CMD [ "symfony", "server:prod"]

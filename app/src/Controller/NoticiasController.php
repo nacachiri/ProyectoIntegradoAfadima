@@ -42,8 +42,6 @@ class NoticiasController extends AbstractController
 
         $imgUrl = uniqid().'.'.$imagen->getClientOriginalExtension();
 
-        echo $imagen->getRealPath();
-
         move_uploaded_file($imagen->getRealPath(), 'Imagenes/noticias/'.$imgUrl);
 
         if (empty($title) || empty($description) || empty($socioId)) {
@@ -52,7 +50,10 @@ class NoticiasController extends AbstractController
 
         $this->noticiasRepository->add($title, $description, $imgUrl, $socioId);
 
-        return new JsonResponse(['status' => 'Noticia Creada correctamente'], Response::HTTP_CREATED);
+        return new JsonResponse([
+            'status' => 'Noticia Creada correctamente',
+            'realPath' => $imagen->getRealPath()
+        ], Response::HTTP_CREATED);
     }
 
     #[Route('/{noticiaId}/edit', name: 'noticias_edit', methods: ['POST'])]

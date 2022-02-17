@@ -35,6 +35,10 @@ class NoticiasController extends AbstractController
     #[Route('/new', name: 'noticias_new', methods: ['POST'])]
     public function new(Request $request): JsonResponse
     {
+
+        echo ini_set( "post_max_size", "500M");
+        echo ini_set( "upload_max_filesize", "500M");
+
         $imagen =$request->files->get('image');
         $title = $request->request->get('title');
         $description = $request->request->get('description');

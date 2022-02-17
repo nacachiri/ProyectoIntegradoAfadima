@@ -52,7 +52,7 @@ class NoticiasController extends AbstractController
 
         return new JsonResponse([
             'status' => 'Noticia Creada correctamente',
-            'realPath' => $imagen
+            'realPath' => $imagen->toString()
         ], Response::HTTP_CREATED);
     }
 

@@ -25,6 +25,10 @@ class TipoDiscapacidadRepository extends ServiceEntityRepository
     {
         $tipoDiscapacidades = $this->findAll();
 
+        if ($tipoDiscapacidades == null) {
+            throw new NotFoundHttpException('No hay TipoDiscapacidades');
+        }
+
         foreach ($tipoDiscapacidades as $tipoDiscapacidad) {
 
             $data[] = [
@@ -42,6 +46,10 @@ class TipoDiscapacidadRepository extends ServiceEntityRepository
     public function showId($id)
     {
         $tipoDiscapacidad = $this->findOneBy(['typeId' => $id]);
+
+        if ($tipoDiscapacidad == null) {
+            throw new NotFoundHttpException('No hay TipoDiscapacidad');
+        }
 
         $data = [
 

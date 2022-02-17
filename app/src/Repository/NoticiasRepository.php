@@ -26,6 +26,10 @@ class NoticiasRepository extends ServiceEntityRepository
     {
         $noticias = $this->findAll();
 
+        if ($noticias == null) {
+            throw new NotFoundHttpException('No hay Noticias');
+        }
+
         foreach ($noticias as $noticia) {
 
             $data[] = [
@@ -46,6 +50,10 @@ class NoticiasRepository extends ServiceEntityRepository
     public function showId($id)
     {
         $noticia = $this->findOneBy(['id' => $id]);
+
+        if ($noticia == null) {
+            throw new NotFoundHttpException('No hay Noticia');
+        }
 
         $data = [
 

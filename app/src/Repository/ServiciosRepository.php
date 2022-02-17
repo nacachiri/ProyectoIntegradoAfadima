@@ -24,7 +24,11 @@ class ServiciosRepository extends ServiceEntityRepository
 
     public function showAll()
     {
-        $service = $this->findAll();
+        $services = $this->findAll();
+
+        if ($services == null) {
+            throw new NotFoundHttpException('No hay Servicios');
+        }
 
         foreach ($services as $service) {
 
@@ -46,6 +50,10 @@ class ServiciosRepository extends ServiceEntityRepository
     public function showId($id)
     {
         $service = $this->findOneBy(['id' => $id]);
+
+        if ($service == null) {
+            throw new NotFoundHttpException('No hay Service');
+        }
 
         $data = [
 

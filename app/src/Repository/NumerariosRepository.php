@@ -26,6 +26,10 @@ class NumerariosRepository extends ServiceEntityRepository
     {
         $numerarios = $this->findAll();
 
+        if ($numerarios == null) {
+            throw new NotFoundHttpException('No hay Numerarios');
+        }
+
         foreach ($numerarios as $numerario) {
 
             $data[] = [
@@ -46,6 +50,10 @@ class NumerariosRepository extends ServiceEntityRepository
     public function showId($id)
     {
         $numerario = $this->findOneBy(['id' => $id]);
+
+        if ($numerario == null) {
+            throw new NotFoundHttpException('No hay Numerario');
+        }
 
         $data = [
 

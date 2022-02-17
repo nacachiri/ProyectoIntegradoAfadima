@@ -26,6 +26,10 @@ class ProductosRepository extends ServiceEntityRepository
     {
         $productos = $this->findAll();
 
+        if ($productos == null) {
+            throw new NotFoundHttpException('No hay Productos');
+        }
+
         foreach ($productos as $producto) {
 
             $data[] = [
@@ -46,6 +50,10 @@ class ProductosRepository extends ServiceEntityRepository
     public function showId($id)
     {
         $producto = $this->findOneBy(['id' => $id]);
+
+        if ($producto == null) {
+            throw new NotFoundHttpException('No hay Producto');
+        }
 
         $data = [
 

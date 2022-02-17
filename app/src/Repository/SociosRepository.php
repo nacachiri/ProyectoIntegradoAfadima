@@ -27,6 +27,10 @@ class SociosRepository extends ServiceEntityRepository
     {
         $socios = $this->findAll();
 
+        if ($socios == null) {
+            throw new NotFoundHttpException('No hay Socios');
+        }
+
         foreach ($socios as $socio) {
 
             $data[] = [
@@ -51,6 +55,10 @@ class SociosRepository extends ServiceEntityRepository
     public function showId($id)
     {
         $socio = $this->findOneBy(['id' => $id]);
+
+        if ($socio == null) {
+            throw new NotFoundHttpException('No hay Socio');
+        }
 
         $data = [
 

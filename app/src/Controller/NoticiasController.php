@@ -42,7 +42,9 @@ class NoticiasController extends AbstractController
 
         $imgUrl = uniqid().'.'.$imagen->getClientOriginalExtension();
 
-        // move_uploaded_file($imagen->getRealPath(), 'Imagenes/noticias/'.$imgUrl);
+        dd($imagen);
+
+        move_uploaded_file($imagen->getRealPath(), 'Imagenes/noticias/'.$imgUrl);
 
         if (empty($title) || empty($description) || empty($socioId)) {
             throw new NotFoundHttpException('Los parametros no son correctos');
@@ -51,9 +53,7 @@ class NoticiasController extends AbstractController
         $this->noticiasRepository->add($title, $description, $imgUrl, $socioId);
 
         return new JsonResponse([
-            'status' => 'Noticia Creada correctamente',
-            'realPath' => $imagen->toString()
-        ], Response::HTTP_CREATED);
+            'status' => 'Noticia Creada correctamente'], Response::HTTP_CREATED);
     }
 
     #[Route('/{noticiaId}/edit', name: 'noticias_edit', methods: ['POST'])]

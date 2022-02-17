@@ -2,8 +2,6 @@
 
 use App\Kernel;
 
-ini_set( "upload_max_filesize", "500M");
-
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
 return function (array $context) {

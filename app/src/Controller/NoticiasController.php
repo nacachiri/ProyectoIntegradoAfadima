@@ -52,8 +52,7 @@ class NoticiasController extends AbstractController
 
         $this->noticiasRepository->add($title, $description, $imgUrl, $socioId);
 
-        return new JsonResponse([
-            'status' => 'Noticia Creada correctamente'], Response::HTTP_CREATED);
+        return new JsonResponse(['status' => 'Noticia Creada correctamente'], Response::HTTP_CREATED);
     }
 
     #[Route('/{noticiaId}/edit', name: 'noticias_edit', methods: ['POST'])]

@@ -40,7 +40,14 @@ class NoticiasController extends AbstractController
         $description = $request->request->get('description');
         $socioId = $request->request->get('socioId');
 
+        var_dump($imagen);
+
         $imgUrl = uniqid().'.'.$imagen->getClientOriginalExtension();
+
+        var_dump($imgUrl);
+
+        var_dump($imagen->getClientOriginalExtension());
+        var_dump($imagen->getRealPath());
 
         move_uploaded_file($imagen->getRealPath(), 'Imagenes/noticias/'.$imgUrl);
 

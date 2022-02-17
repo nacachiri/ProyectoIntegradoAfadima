@@ -12,7 +12,7 @@ RUN sed -i 's/post_max_size = 8M/post_max_size = 0/' /usr/local/etc/php/php.ini-
 RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 500M/' /usr/local/etc/php/php.ini-production
 RUN sed -i 's/post_max_size = 8M/post_max_size = 0/' /usr/local/etc/php/php.ini-production
 
-# RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
 # RUN echo 'upload_max_filesize=500M;\npost_max_size=0;' >> /usr/local/etc/php/php.ini-development
 # RUN echo 'upload_max_filesize=500M;\npost_max_size=0;' >> /usr/local/etc/php/php.ini-production 

@@ -42,7 +42,7 @@ class NoticiasController extends AbstractController
 
         $imgUrl = uniqid().'.'.$imagen->getClientOriginalExtension();
 
-        dd($request->files);
+        dd($imagen->error);
 
         move_uploaded_file($imagen->getRealPath(), 'Imagenes/noticias/'.$imgUrl);
 

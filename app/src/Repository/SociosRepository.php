@@ -105,7 +105,7 @@ class SociosRepository extends ServiceEntityRepository
                 $arrError[] = $value->getMessage();
             }
 
-            return ['error' => 0, 'message' => $arrError];;
+            return ['error' => 1, 'message' => $arrError];;
 
         }else {
             return ['error' => 0, 'message' => 'Socio Creado correctamente'];

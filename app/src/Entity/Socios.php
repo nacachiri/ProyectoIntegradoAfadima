@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SociosRepository::class)]
 class Socios implements UserInterface, PasswordAuthenticatedUserInterface
@@ -18,26 +19,43 @@ class Socios implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank]
     private $id;
 
+    #[Assert\NotBlank]
+    #[Assert\Email(
+        message: 'Email {{ value }} es incorrecto.',
+    )]
+    #[Assert\Unique]
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $email;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255)]
     private $password;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'json', length: 255)]
     private $rol;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 50)]
     private $name;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 100)]
     private $surnames;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255)]
     private $address;
-
+    #[Assert\Length(
+        min: 9,
+        max: 9,
+        minMessage: 'Tu telefono no puede ser menor a {{ limit }} caracteres',
+        maxMessage: 'Tu telefono no puede ser mayor a {{ limit }} caracteres',
+    )]
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'integer')]
     private $phone;
 

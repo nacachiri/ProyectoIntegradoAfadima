@@ -44,10 +44,6 @@ class SociosController extends AbstractController
         $address = $dataPost['address'];
         $phone = $dataPost['phone'];
         $numerarioId = ($dataPost['numerarioId']) ? $dataPost['numerarioId'] : null;
-        
-        if (empty($email) || empty($password) || empty($rol) || empty($name) || empty($surnames) || empty($address) || empty($phone)) {
-            throw new NotFoundHttpException('Los parametros no son correctos');
-        }
 
         $this->sociosRepository->add($email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId);
 

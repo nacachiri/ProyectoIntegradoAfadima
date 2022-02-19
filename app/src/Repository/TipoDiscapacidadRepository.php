@@ -6,6 +6,7 @@ use App\Entity\TipoDiscapacidad;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method TipoDiscapacidad|null find($id, $lockMode = null, $lockVersion = null)

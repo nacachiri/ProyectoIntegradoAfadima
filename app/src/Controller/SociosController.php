@@ -45,9 +45,9 @@ class SociosController extends AbstractController
         $phone = $dataPost['phone'];
         $numerarioId = ($dataPost['numerarioId']) ? $dataPost['numerarioId'] : null;
 
-        $this->sociosRepository->add($email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId);
+        $errors = $this->sociosRepository->add($email, $password, $rol, $name, $surnames, $address, $phone, $numerarioId);
 
-        return new JsonResponse(['status' => 'Socio Creado correctamente'], Response::HTTP_CREATED);
+        return new JsonResponse(['status' => $errors], Response::HTTP_CREATED);
     }
 
     #[Route('/{socioId}/edit', name: 'socios_edit', methods: ['PUT'])]

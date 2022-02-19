@@ -19,14 +19,12 @@ class Socios implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Assert\NotBlank]
     private $id;
 
     #[Assert\NotBlank]
     #[Assert\Email(
         message: 'Email {{ value }} es incorrecto.',
     )]
-    #[Assert\Unique]
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $email;
 
@@ -34,7 +32,6 @@ class Socios implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $password;
 
-    #[Assert\NotBlank]
     #[ORM\Column(type: 'json', length: 255)]
     private $rol;
 
@@ -49,6 +46,7 @@ class Socios implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255)]
     private $address;
+    
     #[Assert\Length(
         min: 9,
         max: 9,

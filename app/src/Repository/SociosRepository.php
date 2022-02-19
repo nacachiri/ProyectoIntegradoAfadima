@@ -7,6 +7,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method Socios|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,11 +18,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 class SociosRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager, UserPasswordHasherInterface $encoder, ValidatorInterface $validator)
     {
         parent::__construct($registry, Socios::class);
         $this->manager = $entityManager;
         $this->encoder = $encoder;
+        $this->validator = $validator;
     }
 
     public function showAll()
@@ -92,6 +95,22 @@ class SociosRepository extends ServiceEntityRepository
             ->setAddress($address)
             ->setPhone($phone)
             ->setNumerarioId($this->manager->getRepository(Numerarios::class)->findOneBy(['id' => $numerarioId]));
+
+
+        $errors = $this->validator->validate($socio);
+
+        if (count($errors) > 0) {
+            
+            foreach ($errors as $value) {
+                $arrError[] = $value->getMessage();
+            }
+
+            return ['error' => 0, 'message' => $arrError];;
+
+        }else {
+            return ['error' => 0, 'message' => 'Socio Creado correctamente'];
+        }
+        
 
         $this->manager->persist($socio);
         $this->manager->flush();

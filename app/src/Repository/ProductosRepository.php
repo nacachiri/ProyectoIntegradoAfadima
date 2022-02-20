@@ -38,10 +38,11 @@ class ProductosRepository extends ServiceEntityRepository
                 'name' => $producto->getName(),
                 'description' => $producto->getDescription(),
                 'imgUrl' => 'Imagenes/productos/'.$producto->getImgUrl(),
-                'numerarioId' => $producto->getNumerarioId()->getName(),
-
+                'numerarioId' => [
+                    'id' => $producto->getNumerarioId()->getId(),
+                    'name' => $producto->getNumerarioId()->getName(),
+                ]
             ];
-
         }
 
         return $data;

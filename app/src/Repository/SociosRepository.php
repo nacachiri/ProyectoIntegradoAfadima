@@ -109,11 +109,9 @@ class SociosRepository extends ServiceEntityRepository
 
         }else {
             return ['error' => 0, 'message' => 'Socio Creado correctamente'];
+            $this->manager->persist($socio);
+            $this->manager->flush();
         }
-        
-
-        $this->manager->persist($socio);
-        $this->manager->flush();
         
     }
 
